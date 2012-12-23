@@ -117,8 +117,9 @@ var jsApp	=
 	loaded: function ()
 	{
 		// set the "Play/Ingame" Screen Object
+		me.state.set(me.state.MENU, new TitleScreen());
 		me.state.set(me.state.PLAY, new PlayScreen());
-      
+       me.state.transition("fade", "#FFFFFF", 250);
       // start the game 
 		me.state.change(me.state.PLAY);
 		
@@ -127,7 +128,7 @@ var jsApp	=
 		 
 	   // add our player entity in the entity pool
 	   me.entityPool.add("mainPlayer", PlayerEntity);
-		me.entityPool.add("CoinEntity", CoinEntity);
+	me.entityPool.add("CoinEntity", CoinEntity);
 	me.entityPool.add("EnemyEntity", EnemyEntity);				 
 	   // enable the keyboard
 	   me.input.bindKey(me.input.KEY.LEFT,  "left");
@@ -135,7 +136,7 @@ var jsApp	=
 	   me.input.bindKey(me.input.KEY.X,     "jump", true);
 		  
 	   // start the game 
-	   me.state.change(me.state.PLAY);
+	   me.state.change(me.state.MENU);
 	}
 
 }; // jsApp
@@ -152,10 +153,10 @@ var PlayScreen = me.ScreenObject.extend(
         me.levelDirector.loadLevel("area01");
  
         // add a default HUD to the game mngr
-        me.game.addHUD(0, 430, 640, 60);
- 
+        me.game.addHUD(0, 0, 640, 60);
         // add a new HUD item
         me.game.HUD.addItem("score", new ScoreObject(620, 10));
+        me.game.HUD.addItem("live", new LiveObject(100, 10));
  
         // make sure everyhting is in the right order
         me.game.sort();
