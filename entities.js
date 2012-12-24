@@ -546,8 +546,7 @@ var GameEndScreen = me.ScreenObject.extend({
     update: function() {
         // enter pressed ?
         if (me.input.isKeyPressed('enter')) {
-            me.state.change(me.state.PLAY);
-            numHearts = 0;
+			document.location="./prize.html";
         }
         return true;
     },
