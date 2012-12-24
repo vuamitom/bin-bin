@@ -68,6 +68,18 @@ var g_resources = [{
 		src: "data/audio/",
 		channel: 1
 	}, {
+		name: "applause",
+		type: "audio",
+		src: "data/audio/",
+		channel: 1
+	} ,{
+		name: "laughter",
+		type: "audio",
+		src: "data/audio/",
+		channel: 1
+	} ,
+	
+	{
 		name: "DST-InertExponent",
 		type: "audio",
 		src: "data/audio/",
@@ -128,8 +140,10 @@ var jsApp	=
 		 
 	   // add our player entity in the entity pool
 	   me.entityPool.add("mainPlayer", PlayerEntity);
+	   me.entityPool.add("GoalEntity", GoalEntity);
 	me.entityPool.add("CoinEntity", CoinEntity);
 	me.entityPool.add("EnemyEntity", EnemyEntity);				 
+	
 	   // enable the keyboard
 	   me.input.bindKey(me.input.KEY.LEFT,  "left");
 	   me.input.bindKey(me.input.KEY.RIGHT, "right");

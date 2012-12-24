@@ -98,6 +98,8 @@ var PlayerEntity = me.ObjectEntity.extend({
 									this.falling = false;
 									this.vel.y = - this.maxVel.y * me.timer.tick;
 									this.jumping = true;
+									this.collidable = false;
+									me.audio.play("laughter");
 								}
 							}
 						}
@@ -142,6 +144,33 @@ var CoinEntity = me.CollectableEntity.extend({
 	}
  
 });
+
+
+/*----------------
+ a Goal entity
+------------------------ */
+var GoalEntity = me.CollectableEntity.extend({
+    // extending the init function is not mandatory
+    // unless you need to add some extra initialization
+    init: function(x, y, settings) {
+        // call the parent constructor
+        this.parent(x, y, settings);
+    },
+ 
+    // this function is called by the engine, when
+    // an object is touched by something (here collected)
+    onCollision: function() {
+        // do something when collected
+        
+        me.audio.play("cling");
+        this.collidable = false;
+        me.game.remove(this);
+        alert("Congratulation");
+    	me.audio.play("applause");
+	}
+ 
+});
+
 
 /* --------------------------
 an enemy Entity
