@@ -176,9 +176,8 @@ var GoalEntity = me.CollectableEntity.extend({
         me.game.remove(this);
         //alert("Congratulation");
     	me.audio.play("applause",false,function(){
-    		//game.state.pause();
-			game.state.change(game.state.GAME_END);
     	});
+    	me.state.change(me.state.GAME_END);
 	}
  
 });
@@ -499,7 +498,7 @@ var GameEndScreen = me.ScreenObject.extend({
         this.scrollerfont = null;
         this.scrollertween = null;
  
-        this.scroller = "BIN COLLECTED " + numHearts + " OVER 6 BEFORE SHE FAILED";
+        this.scroller = "BIN COLLECTED " + numHearts + " OVER 6 HEARTS";
         this.scrollerpos = 600;
     },
  

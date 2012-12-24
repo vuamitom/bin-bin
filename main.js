@@ -148,6 +148,7 @@ var jsApp	=
 		// set the "Play/Ingame" Screen Object
 		me.state.set(me.state.MENU, new TitleScreen());
 		me.state.set(me.state.PLAY, new PlayScreen());
+
 		me.state.set(me.state.GAME_END, new GameEndScreen());
 		me.state.set(me.state.GAMEOVER, new GameOverScreen());
        me.state.transition("fade", "#FFFFFF", 250);
