@@ -99,7 +99,12 @@ var PlayerEntity = me.ObjectEntity.extend({
 									this.vel.y = - this.maxVel.y * me.timer.tick;
 									this.jumping = true;
 									this.collidable = false;
-									me.audio.play("laughter");
+									//alert('test');
+									me.audio.play("laughter",false, function(){
+										me.state.pause();
+										me.state.change(me.state.GAMEOVER);
+										alert("DONE");
+									});
 								}
 							}
 						}
@@ -165,8 +170,11 @@ var GoalEntity = me.CollectableEntity.extend({
         me.audio.play("cling");
         this.collidable = false;
         me.game.remove(this);
-        alert("Congratulation");
-    	me.audio.play("applause");
+        //alert("Congratulation");
+    	me.audio.play("applause",false,function(){
+    		//game.state.pause();
+			game.state.change(game.state.GAME_END);
+    	});
 	}
  
 });
