@@ -161,7 +161,7 @@ var GoalEntity = me.CollectableEntity.extend({
     // an object is touched by something (here collected)
     onCollision: function() {
         // do something when collected
-        
+        me.game.HUD.updateItemValue("score", 1);
         me.audio.play("cling");
         this.collidable = false;
         me.game.remove(this);
@@ -306,7 +306,7 @@ var TitleScreen = me.ScreenObject.extend({
         this.scrollerfont = null;
         this.scrollertween = null;
  
-        this.scroller = "A SMALL STEP BY STEP TUTORIAL FOR GAME CREATION WITH MELONJS       ";
+        this.scroller = "WELCOME MY BIN BIN TO THE MYSTERY WORLD ";
         this.scrollerpos = 600;
     },
  

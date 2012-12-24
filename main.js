@@ -84,7 +84,13 @@ var g_resources = [{
 		type: "audio",
 		src: "data/audio/",
 		channel: 1
-	}];
+	},
+	{
+		name: "title_screen",
+		type: "image",
+		src: "data/GUI/title_screen.png"
+	}
+	];
 
 
 
