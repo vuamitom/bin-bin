@@ -1,3 +1,4 @@
+var numHearts = 0;
 /*------------------- 
 a player entity
 -------------------------------- */
@@ -101,9 +102,10 @@ var PlayerEntity = me.ObjectEntity.extend({
 									this.collidable = false;
 									//alert('test');
 									me.audio.play("laughter",false, function(){
-										me.state.pause();
+										//me.state.pause();
 										me.state.change(me.state.GAMEOVER);
-										alert("DONE");
+										//alert("DONE");
+			
 									});
 								}
 							}
@@ -142,6 +144,7 @@ var CoinEntity = me.CollectableEntity.extend({
     onCollision: function() {
         // do something when collected
         me.game.HUD.updateItemValue("score", 1);
+        numHearts ++;
         me.audio.play("cling");
         this.collidable = false;
 		// remove it
@@ -167,6 +170,7 @@ var GoalEntity = me.CollectableEntity.extend({
     onCollision: function() {
         // do something when collected
         me.game.HUD.updateItemValue("score", 1);
+        numHearts++;
         me.audio.play("cling");
         this.collidable = false;
         me.game.remove(this);
@@ -372,6 +376,188 @@ var TitleScreen = me.ScreenObject.extend({
         context.drawImage(this.title, 0, 0);
  
         this.font.draw(context, "PRESS ENTER TO PLAY", 20, 240);
+        this.scrollerfont.draw(context, this.scroller, this.scrollerpos, 440);
+    },
+ 
+    // destroy function
+    onDestroyEvent: function() {
+        me.input.unbindKey(me.input.KEY.ENTER);
+ 
+        //just in case
+        this.scrollertween.stop();
+    }
+ 
+});
+
+
+/*----------------------
+ 
+    A game over screen
+ 
+  ----------------------*/
+ 
+var GameOverScreen = me.ScreenObject.extend({
+    // constructor
+    init: function() {
+        this.parent(true);
+ 
+        // title screen image
+        this.title = null;
+ 
+        this.font = null;
+        this.scrollerfont = null;
+        this.scrollertween = null;
+ 
+        this.scroller = "BIN COLLECTED " + numHearts + " OVER 6 BEFORE SHE FAILED";
+        this.scrollerpos = 600;
+    },
+ 
+    // reset function
+    onResetEvent: function() {
+        if (this.title == null) {
+            // init stuff if not yet done
+            this.title = me.loader.getImage("gameover_screen");
+            // font to display the menu items
+            this.font = new me.BitmapFont("32x32_font", 32);
+            this.font.set("left");
+ 
+            // set the scroller
+            this.scrollerfont = new me.BitmapFont("32x32_font", 32);
+            this.scrollerfont.set("left");
+ 
+        }
+ 
+        // reset to default value
+        this.scrollerpos = 640;
+ 
+        // a tween to animate the arrow
+        this.scrollertween = new me.Tween(this).to({
+            scrollerpos: -2200
+        }, 10000).onComplete(this.scrollover.bind(this)).start();
+ 
+        // enable the keyboard
+        me.input.bindKey(me.input.KEY.ENTER, "enter", true);
+ 
+        // play something
+        me.audio.play("cling");
+ 
+    },
+ 
+    // some callback for the tween objects
+    scrollover: function() {
+        // reset to default value
+        this.scrollerpos = 640;
+        this.scrollertween.to({
+            scrollerpos: -2200
+        }, 10000).onComplete(this.scrollover.bind(this)).start();
+    },
+ 
+    // update function
+    update: function() {
+        // enter pressed ?
+        if (me.input.isKeyPressed('enter')) {
+            me.state.change(me.state.PLAY);
+            numHearts = 0;
+        }
+        return true;
+    },
+ 
+    // draw function
+    draw: function(context) {
+        context.drawImage(this.title, 0, 0);
+ 
+        this.font.draw(context, "GAME OVER - ENTER TO REPLAY", 20, 240);
+        this.scrollerfont.draw(context, this.scroller, this.scrollerpos, 440);
+    },
+ 
+    // destroy function
+    onDestroyEvent: function() {
+        me.input.unbindKey(me.input.KEY.ENTER);
+ 
+        //just in case
+        this.scrollertween.stop();
+    }
+ 
+});
+
+
+/*----------------------
+ 
+    A game end screen
+ 
+  ----------------------*/
+ 
+var GameEndScreen = me.ScreenObject.extend({
+    // constructor
+    init: function() {
+        this.parent(true);
+ 
+        // title screen image
+        this.title = null;
+ 
+        this.font = null;
+        this.scrollerfont = null;
+        this.scrollertween = null;
+ 
+        this.scroller = "BIN COLLECTED " + numHearts + " OVER 6 BEFORE SHE FAILED";
+        this.scrollerpos = 600;
+    },
+ 
+    // reset function
+    onResetEvent: function() {
+        if (this.title == null) {
+            // init stuff if not yet done
+            this.title = me.loader.getImage("gameend_screen");
+            // font to display the menu items
+            this.font = new me.BitmapFont("32x32_font", 32);
+            this.font.set("left");
+ 
+            // set the scroller
+            this.scrollerfont = new me.BitmapFont("32x32_font", 32);
+            this.scrollerfont.set("left");
+ 
+        }
+ 
+        // reset to default value
+        this.scrollerpos = 640;
+ 
+        // a tween to animate the arrow
+        this.scrollertween = new me.Tween(this).to({
+            scrollerpos: -2200
+        }, 10000).onComplete(this.scrollover.bind(this)).start();
+ 
+        // enable the keyboard
+        me.input.bindKey(me.input.KEY.ENTER, "enter", true);
+ 
+        // play something
+        me.audio.play("cling");
+ 
+    },
+ 
+    // some callback for the tween objects
+    scrollover: function() {
+        // reset to default value
+        this.scrollerpos = 640;
+        this.scrollertween.to({
+            scrollerpos: -2200
+        }, 10000).onComplete(this.scrollover.bind(this)).start();
+    },
+ 
+    // update function
+    update: function() {
+        // enter pressed ?
+        if (me.input.isKeyPressed('enter')) {
+            me.state.change(me.state.PLAY);
+            numHearts = 0;
+        }
+        return true;
+    },
+ 
+    // draw function
+    draw: function(context) {
+        context.drawImage(this.title, 0, 0);
+ 
+        //this.font.draw(context, "GAME OVER", 20, 240);
         this.scrollerfont.draw(context, this.scroller, this.scrollerpos, 440);
     },
  
